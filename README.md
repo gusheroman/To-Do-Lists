@@ -1,6 +1,6 @@
-How to run this project
+# How to run this project
 
-Install Dependencies
+## Install Dependencies
 
 yarn install
 
@@ -10,7 +10,7 @@ npm install
 
 Run app
 
-yarn start
+## yarn start
 
 OR
 
