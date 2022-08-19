@@ -76,10 +76,36 @@ const useStyles = makeStyles({
 
 function App() {
   const classes = useStyles();
-  const [toDo, setToDO] = useState([
+  const [toDo, setToDo] = useState([
     { id: 1, title: "task 1", status: true },
     { id: 2, title: "task 2", status: false },
   ]);
+  const [newTask, setNewTask] = useState("");
+
+  const addTask = () => {
+    if (newTask) {
+      let num = toDo.length + 1;
+      let newEntry = { id: num, title: newTask, status: false };
+      setToDo([...toDo, newEntry]);
+      setNewTask("");
+    }
+  };
+
+  const deleteTask = (id) => {
+    let newTasks = toDo.filter((task) => task.id !== id);
+    setToDo(newTasks);
+  };
+
+  const markFinishTask = (id) => {
+    let newTask = toDo.map((task) => {
+      if (task.id === id) {
+        return { ...task, status: !task.status };
+      }
+      return task;
+    });
+    setToDo(newTask);
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.body}>
@@ -100,14 +126,16 @@ function App() {
               classes={{ root: classes.input }}
               InputProps={{ disableUnderline: true }}
               variant="filled"
+              value={newTask}
+              onChange={(e) => setNewTask(e.target.value)}
             />
-            <Button variant="contained" color="Secondary">
+            <Button variant="contained" color="Secondary" onClick={addTask}>
               Add Task
             </Button>
           </div>
         </div>
         <Paper className={classes.cardContainer}>
-          <p>{toDo && toDo.length ? "" : "No Tasks..."}</p>
+          <p>{toDo && toDo.length ? "" : "No Tasks to do :)"}</p>
           {toDo &&
             toDo.map((task) => (
               <React.Fragment key={task.id}>
@@ -117,15 +145,23 @@ function App() {
                   </div>
                   <div className={classes.iconContainer}>
                     <span>
-                      <DeleteIcon className={classes.icon} fontSize="small" />
+                      <DeleteIcon
+                        className={classes.icon}
+                        fontSize="small"
+                        onClick={() => deleteTask(task.id)}
+                      />
                     </span>
-                    <span>
-                      <CreateIcon className={classes.icon} fontSize="small" />
-                    </span>
+                    {task.status ? null : (
+                      <span>
+                        <CreateIcon className={classes.icon} fontSize="small" />
+                      </span>
+                    )}
+
                     <span>
                       <CheckCircleIcon
                         className={classes.icon}
                         fontSize="small"
+                        onClick={() => markFinishTask(task.id)}
                       />
                     </span>
                   </div>
