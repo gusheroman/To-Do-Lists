@@ -8,9 +8,9 @@ OR
 
 npm install
 
-Run app
+## Run app
 
-## yarn start
+yarn start
 
 OR
 
