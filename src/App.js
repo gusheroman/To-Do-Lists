@@ -1,14 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import AddTaskForm from "./components/AddTaskForm.jsx";
 import UpdateForm from "./components/UpdateForm.jsx";
 import ToDo from "./components/ToDo.jsx";
 function App() {
+  const getTodoList = () => {
+    let list = localStorage.getItem("toDo");
+    console.log(list);
+    if (list) {
+      return JSON.parse(localStorage.getItem("toDo"));
+    } else {
+      return [];
+    }
+  };
   const classes = useStyles();
-  const [toDo, setToDo] = useState([]);
+  const [toDo, setToDo] = useState(getTodoList());
   const [newTask, setNewTask] = useState("");
   const [updateData, setUpdateData] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("toDo", JSON.stringify(toDo));
+    if (toDo) {
+      setToDo(toDo);
+    }
+  }, [toDo]);
 
   const addTask = () => {
     if (newTask) {
