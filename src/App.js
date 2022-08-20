@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import AddTaskForm from "./components/AddTaskForm.jsx";
-import UpdateForm from "./components/UpdateForm.jsx";
-import ToDo from "./components/ToDo.jsx";
+import AddTaskForm from "./components/AddTaskForm.js";
+import UpdateForm from "./components/UpdateForm.js";
+import ToDo from "./components/ToDo.js";
 function App() {
   const getTodoList = () => {
     let list = localStorage.getItem("toDo");
